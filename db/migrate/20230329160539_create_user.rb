@@ -4,7 +4,7 @@ class CreateUser < ActiveRecord::Migration[7.0]
       t.string :username, index: { unique: true, name: 'unique_username' }
       t.string :email,  index: { unique: true, name: 'unique_email' }
       t.string :password_digest
-      t.integer :role, null: false
+      t.boolean :isAdmin
       t.timestamps
     end
   end

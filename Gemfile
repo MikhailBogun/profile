@@ -11,6 +11,17 @@ gem 'pg', '~> 1.1'
 
 gem 'bcrypt', '~> 3.1'
 
+gem 'jwt', '~> 2.2', '>= 2.2.1'
+gem 'jwt_sessions', '~> 2.7', '>= 2.7.4'
+
+# Storing
+
+gem 'redis', '~> 4.1', '>= 4.1.3'
+gem 'redis-rails', '~> 5.0', '>= 5.0.2'
+
+
+gem 'devise'
+
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
@@ -37,7 +48,7 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem "rack-cors"
+gem "rack-cors"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
