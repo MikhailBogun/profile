@@ -1,0 +1,59 @@
+require: 
+  - rubocop-rspec
+  - rubocop-performance
+  - rubocop-rails
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+    - db/schema.rb
+    - config/environments/*.rb
+
+Metrics/MethodLength:
+  Exclude:
+    - db/migrate/*.rb
+
+AllCops:
+  NewCops: enable
+  DisplayStyleGuide: true
+  Exclude:
+    - 'db/**/*'
+    - 'script/**/*'
+    - 'bin/*'
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+    - 'lib/**/*'
+
+
+RSpec/ImplicitSubject:
+  Enabled: false
+
+Lint/UnreachableCode:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 4
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 9
+
+Style/SignalException:
+  Enabled: false
+
+Rails/FilePath:
+  Enabled: false
