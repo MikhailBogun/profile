@@ -23,6 +23,7 @@ gem 'redis-rails', '~> 5.0', '>= 5.0.2'
 gem 'devise'
 
 
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 

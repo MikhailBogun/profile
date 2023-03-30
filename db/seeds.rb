@@ -5,6 +5,14 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-
-
-User.create!(email: 'admin@example.com', password: 'password', username: 'test1', isAdmin: true)
+require 'ffaker'
+User.create!(email: FFaker::Internet.email, password: 'password', username: FFaker::Name.first_name, isAdmin: true)
+8.times do
+  Section.create!(
+    name: FFaker::Name.first_name,
+    gender: FFaker::Gender,
+    city: FFaker::Address.city,
+    birthdate: FFaker::Time.date,
+    user_id: 1
+  )
+end
