@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::API
+  include JWTSessions::RailsAuthorization
+  rescue_from JWTSessions::Errors::Unauthorized, with: :not_authorized
+
   before_action :set_default_response_format
 
   # include SimpleEndpoint::Controller
@@ -13,14 +16,13 @@ class ApplicationController < ActionController::API
   #   head(:unauthorized)
   # end
 
-  include JWTSessions::RailsAuthorization
-  rescue_from JWTSessions::Errors::Unauthorized, with: :not_authorized
 
 
   private
 
   def current_user
     @current_user ||= User.find(payload['user_id'])
+    return @current_user
   end
 
   def not_authorized
