@@ -1,4 +1,6 @@
 class Api::V1::UsersController < ApplicationController
+  before_action :authorize_access_request!, only: [:show]
+
   def show
     @users = User.all;
     render json: @users
