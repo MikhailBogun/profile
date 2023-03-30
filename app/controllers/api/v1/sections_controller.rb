@@ -8,4 +8,15 @@ class Api::V1::SectionsController < ApplicationController
     profiles = Section.where({user_id: user.id})
     render json:{profiles:profiles, username: user.username}
   end
+
+
+  def update
+
+  end
+
+  def destroy
+    item_profile = Section.find(params[:id_profile])
+    item_profile.destroy
+    render status: :ok
+  end
 end
