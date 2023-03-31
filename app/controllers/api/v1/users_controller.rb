@@ -2,8 +2,15 @@ class Api::V1::UsersController < ApplicationController
   before_action :authorize_access_request!, only: [:show]
 
   def show
-    @users = User.all;
-    render json: @users
+    if current_user.isAdmin
+      @users = User.all;
+      users_with_count = User.includes(:profile).select('users.*', 'COUNT(profile.id) as profile_count').group('users.id')
+      p users_with_count
+
+      render json: @users, status: :ok
+    else
+      render status: :not_acceptable
+    end
   end
 
   def create

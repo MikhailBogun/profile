@@ -6,13 +6,16 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 require 'ffaker'
+
+render = ['other', 'male', 'female']
+users_id = User.all().select('id')
 User.create!(email: FFaker::Internet.email, password: 'password', username: FFaker::Name.first_name, isAdmin: true)
 8.times do
   Section.create!(
     name: FFaker::Name.first_name,
-    gender: FFaker::Gender,
+    gender: render.sample,
     city: FFaker::Address.city,
     birthdate: FFaker::Time.date,
-    user_id: 1
+    user_id: users_id.sample[:id]
   )
 end
