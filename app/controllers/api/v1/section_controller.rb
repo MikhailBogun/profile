@@ -1,11 +1,10 @@
-class Api::V1::SectionsController < ApplicationController
+class Api::V1::SectionController < ApplicationController
   before_action :authorize_access_request!
+
   def index
-    render json: {test:"okey"}
-  end
-  def show
     user = current_user;
     query_where = {user_id: user.id}
+    p params[:all]
     profiles = user.isAdmin && params[:all] ? Section.where.not(query_where) : Section.where(query_where);
     render json:{profiles:profiles, username: user.username}
   end

@@ -1,10 +1,7 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  has_many :sections, dependent: :destroy
+
   has_secure_password
-
-  has_many :section, dependent: :destroy
-
 
   validates :username, allow_blank: false,
                        length: {

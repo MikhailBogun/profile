@@ -10,7 +10,7 @@ class Api::V1::RegistrationsController < ApplicationController
         httponly: true,
         secure: Rails.env.production?)
       @current_user = user
-      render json: { token: tokens[:access]}
+      render json: { token: tokens[:access], user: { id:user.id, username:user.username}}
     else
       render json: "Invalid email or password", status: :unauthorized
     end
