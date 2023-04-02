@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_many :sections, dependent: :destroy
+  has_many :profiles, dependent: :destroy
 
   has_secure_password
 

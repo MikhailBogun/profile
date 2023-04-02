@@ -1,5 +1,5 @@
 class Api::V1::UserController < ApplicationController
-  before_action :authorize_access_request!, only: [:show, :index]
+  before_action :authorize_access_request!, only: [:show, :index, :update]
 
   def index
     if current_user.isAdmin
@@ -8,6 +8,11 @@ class Api::V1::UserController < ApplicationController
     else
       render status: :not_acceptable
     end
+  end
+
+  def show
+    p params
+    render status: :ok
   end
 
   def create
@@ -19,6 +24,9 @@ class Api::V1::UserController < ApplicationController
     else
       render status: 409
     end
+  end
+
+  def update
   end
 
   private
@@ -39,9 +47,9 @@ class Api::V1::UserController < ApplicationController
 
   def user_with_count
     User.find_by_sql('
-      SELECT users.id, users.email, users.username, users."isAdmin", COUNT(sections.id) as profile_count
+      SELECT users.id, users.email, users.username, users."isAdmin", COUNT(profiles.id) as profile_count
       FROM users
-      LEFT JOIN sections ON users.id = sections.user_id
+      LEFT JOIN profiles ON users.id = profiles.user_id
       GROUP BY users.id;
     ')
   end

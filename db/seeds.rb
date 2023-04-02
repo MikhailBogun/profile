@@ -9,9 +9,11 @@ require 'ffaker'
 
 render = ['other', 'male', 'female']
 users_id = User.all().select('id')
-User.create!(email: FFaker::Internet.email, password: 'password', username: FFaker::Name.first_name, isAdmin: true)
+# User.create!(email: 'admin@gmail.com', password: 'password', username: FFaker::Name.first_name, isAdmin: true)
+
+User.create!(email: FFaker::Internet.email, password: 'password', username: FFaker::Name.first_name, isAdmin: false)
 8.times do
-  Section.create!(
+  Profile.create!(
     name: FFaker::Name.first_name,
     gender: render.sample,
     city: FFaker::Address.city,

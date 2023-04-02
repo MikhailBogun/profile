@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resource :registration, only: %i[create destroy]
       resources :user, only: %i[index show create destroy]
-      resources :section
+      resources :profile
     end
   end
 end
