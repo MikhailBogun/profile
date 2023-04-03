@@ -1,3 +1,5 @@
+require 'date'
+
 class Api::V1::ProfileController < ApplicationController
   before_action :authorize_access_request!
   before_action :require_admin, only: [:index]
@@ -16,6 +18,15 @@ class Api::V1::ProfileController < ApplicationController
   end
 
 
+  def create
+    created_profile = create_profile(params[:data][:edit_data])
+    if created_profile.save
+      render status: :ok
+    else
+      render status: :not_found
+    end
+  end
+
   def update
     updated_data = params[:data][:edit_data];
     profile = Profile.find(updated_data[:id]);
@@ -26,6 +37,10 @@ class Api::V1::ProfileController < ApplicationController
       birthdate: updated_data[:birthdate]
     )
     render status: :ok
+  end
+
+  def create_profile(data)
+    Profile.new(name: data[:name], birthdate: data[:birthdate], city: data[:city], gender: data[:gender], user_id: current_user.id)
   end
 
   def destroy
