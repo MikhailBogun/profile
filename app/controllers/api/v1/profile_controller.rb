@@ -1,10 +1,18 @@
 class Api::V1::ProfileController < ApplicationController
   before_action :authorize_access_request!
+  before_action :require_admin, only: [:index]
+
 
   def index
     user = current_user;
-    profiles = all_sections(user, params)
-    render json:{profiles:profiles, username: user.username}
+    all_profiles = profiles(user: user, params: params, all:true)
+    render json:{profiles:all_profiles, username: user.username}
+  end
+
+  def show
+    user = current_user;
+    user_profiles = profiles(user: user, params: params);
+    render json:{profiles:user_profiles, username: user.username}
   end
 
 
@@ -28,9 +36,9 @@ class Api::V1::ProfileController < ApplicationController
 
   private
 
-  def all_sections(user, params)
-    query_where = {user_id: user.id}
-    if user.isAdmin && params[:all]
+  def profiles(user:, params:, all: nil)
+    query_where = {user_id: params[:id] ? params[:id] : user.id}
+    if user.isAdmin && all
       Profile.where.not(query_where).order("id DESC")
     else
       Profile.where(query_where).order("id DESC");
