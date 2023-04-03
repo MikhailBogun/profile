@@ -1,5 +1,6 @@
 class Api::V1::UserController < ApplicationController
   before_action :authorize_access_request!, only: [:show, :index, :update]
+  before_action :require_admin, only: [:update, :index]
 
   def index
     if current_user.isAdmin
@@ -11,8 +12,8 @@ class Api::V1::UserController < ApplicationController
   end
 
   def show
-    p params
-    render status: :ok
+    user = User.select(:id, :username, :email, :isAdmin).find_by(id: params[:id])
+    render json: {user: user} ,status: :ok
   end
 
   def create
@@ -27,6 +28,17 @@ class Api::V1::UserController < ApplicationController
   end
 
   def update
+    p params
+    p '+++++++++++++++++++++++++++++++++++++++++'
+    updated_data = params[:data][:edit_data];
+    user = User.find_by( id:updated_data[:id]);
+    if user
+      user_query_update(user, updated_data)
+      render status: :ok
+    else
+
+      render status: :not_found
+    end
   end
 
   private
@@ -52,5 +64,13 @@ class Api::V1::UserController < ApplicationController
       LEFT JOIN profiles ON users.id = profiles.user_id
       GROUP BY users.id;
     ')
+  end
+
+  def user_query_update(user, updated_data)
+    user.update(
+      username:updated_data[:username],
+      email: updated_data[:email],
+      isAdmin: updated_data[:isAdmin]
+    ) 
   end
 end

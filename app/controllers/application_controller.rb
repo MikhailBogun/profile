@@ -20,6 +20,11 @@ class ApplicationController < ActionController::API
 
   private
 
+  def require_admin
+    current_user
+    render status:method_not_allowed unless @current_user.isAdmin 
+  end
+
   def current_user
     @current_user ||= User.find(payload['user_id'])
     return @current_user
