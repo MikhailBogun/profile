@@ -11,7 +11,7 @@ class Api::V1::ProfileController < ApplicationController
 
   def show
     user = current_user;
-    user_profiles = profiles(user: user, params: params);
+    user_profiles = profiles(user: user, params: params)
     render json:{profiles:user_profiles, username: user.username}
   end
 
