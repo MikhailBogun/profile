@@ -1,14 +1,11 @@
 class Api::V1::UserController < ApplicationController
-  before_action :authorize_access_request!, only: [:show, :index, :update]
-  before_action :require_admin, only: [:update, :index]
+  before_action :authorize_access_request!, only: [:show, :index, :update, :destroy]
+  before_action :require_admin, only: [:update, :index, :destroy]
 
   def index
-    if current_user.isAdmin
       users = user_with_count
+
       render json: users, status: :ok
-    else
-      render status: :not_acceptable
-    end
   end
 
   def show
@@ -28,17 +25,20 @@ class Api::V1::UserController < ApplicationController
   end
 
   def update
-    p params
-    p '+++++++++++++++++++++++++++++++++++++++++'
     updated_data = params[:data][:edit_data];
     user = User.find_by( id:updated_data[:id]);
     if user
       user_query_update(user, updated_data)
       render status: :ok
     else
-
       render status: :not_found
     end
+  end
+
+  def destroy
+    item_profile = User.find(params[:id])
+    item_profile.destroy
+    render status: :ok
   end
 
   private
